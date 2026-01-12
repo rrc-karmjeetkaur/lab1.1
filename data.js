@@ -1,0 +1,71 @@
+//Data from Pixell river financial case study. 
+const departments = [
+  {
+    name: "Executive Leadership",
+    employees: [
+      { firstName: "CEO/Chair of Board" },
+      { firstName: "COO/VP Operations" },
+      { firstName: "CFO/VP Administration" },
+      { firstName: "CIO" },
+      { firstName: "VP Client Services" },
+      { firstName: "VP Marketing" },
+    ],
+  },
+  {
+    name: "Directors",
+    employees: [
+      { firstName: "Director Human Resources" },
+      { firstName: "Director Financial and Audit Services" },
+      { firstName: "Director Legal Services / General Counsel" },
+      { firstName: "Director Information Technology" },
+      { firstName: "Director Information Security and CISO" },
+      { firstName: "Director Accounting" },
+      { firstName: "Director Physical Security" },
+    ],
+  },
+  {
+    name: "Management Roles",
+    employees: [
+      { firstName: "Manager, Business Continuity and Disaster Recovery" },
+      { firstName: "Manager, Internal Audit" },
+      { firstName: "Manager, Security Architecture" },
+      { firstName: "Manager, Operational Risk" },
+      { firstName: "Manager Purchasing" },
+      { firstName: "Manager, Customer Experience and Community Engagement" },
+      { firstName: "Manager of Sales" },
+      { firstName: "Manager of Marketing" },
+      { firstName: "Manager, IT End User Service Desk" },
+      { firstName: "Manager, End User Computing" },
+      { firstName: "Manager, IT Telecom, and Infrastructure" },
+      { firstName: "Manager, Data Center and Hosting Services" },
+      { firstName: "Manager, Risk Management" },
+    ],
+  },
+  {
+    name: "ITS and Security Roles",
+    employees: [
+      { firstName: "Incident Coordinator" },
+      { firstName: "Service Desk Analyst" },
+      { firstName: "Deskside and Application Support" },
+      { firstName: "Network Administrator" },
+      { firstName: "Network Infrastructure Technician" },
+      { firstName: "Information Security Analyst / Specialist" },
+      { firstName: "Junior Network Architect" },
+      { firstName: "IT Technician" },
+    ],
+  },
+  {
+    name: "Branch Locations (Organization Info)",
+    employees: [
+      { firstName: "Vancouver Branch — (604) 456-0022" },
+      { firstName: "Edmonton Branch — (780) 468-6800" },
+      { firstName: "Arborg Branch — (204) 555-3461" },
+      { firstName: "Regina (Former) Head Office — (206) 640-2877" },
+      { firstName: "Winnipeg Branch — (204) 988-2402" },
+      { firstName: "Steinbach Branch — (204) 326-3495" },
+      { firstName: "Montréal Branch — (514) 277-5511" },
+      { firstName: "Toronto Branch — (416) 980-2500" },
+      { firstName: "Saint John Branch — (506) 632-0225" },
+    ],
+  },
+];
