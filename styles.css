@@ -1,0 +1,74 @@
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, Arial, sans-serif;
+  background: #f4f6f8;
+  color: #222;
+}
+
+.site-header {
+  background: white;
+  border-bottom: 1px solid #ddd;
+  padding: 16px 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  object-fit: contain;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.greeting {
+  margin: 6px 0 0;
+  color: #555;
+}
+
+.main {
+  max-width: 950px;
+  margin: 0 auto;
+  padding: 18px;
+}
+
+.department {
+  background: white;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.department h2 {
+  margin: 0 0 10px;
+  font-size: 1.15rem;
+}
+
+.employee-list {
+  margin: 0;
+  padding-left: 18px;
+}
+
+.employee-note {
+  margin: 8px 0 0;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+.site-footer {
+  background: white;
+  border-top: 1px solid #ddd;
+  text-align: center;
+  padding: 14px 20px;
+  color: #444;
+}
