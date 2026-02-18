@@ -1,5 +1,5 @@
-import type { Department, Employee } from "../types/directory";
 import departmentsData from "../data/departments.json";
+import type { Department, Employee } from "../types/directory";
 
 let departments: Department[] = departmentsData as Department[];
 
@@ -8,7 +8,10 @@ export const employeeRepo = {
     return departments;
   },
 
-  createEmployee(departmentName: string, employee: Employee): Department[] {
+  createEmployee(
+    departmentName: string,
+    employee: Employee
+  ): Department[] {
     departments = departments.map((dept) =>
       dept.name === departmentName
         ? { ...dept, employees: [...dept.employees, employee] }

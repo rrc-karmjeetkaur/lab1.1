@@ -4,25 +4,23 @@ import "./App.css";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { DepartmentCard } from "./components/DepartmentCard";
-import { AddEmployeeForm } from "./components/AddEmployeeForm";
 
 import type { Department } from "./types/directory";
 import { employeeRepo } from "./repositories/employeeRepo";
+import AddEmployeeForm from "./components/AddEmployeeForm";
 
 export default function App() {
   const [departments, setDepartments] = useState<Department[]>([]);
 
-  // Load departments from repository on app start
   useEffect(() => {
-    const data = employeeRepo.getDepartments();
-    setDepartments(data);
+    setDepartments(employeeRepo.getDepartments());
   }, []);
 
   return (
     <div className="page">
       <Header />
 
-      <main className="main">
+      <main>
         {departments.map((dept) => (
           <DepartmentCard key={dept.name} department={dept} />
         ))}
