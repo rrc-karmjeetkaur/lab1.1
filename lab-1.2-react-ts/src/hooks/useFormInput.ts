@@ -2,19 +2,24 @@ import { useState } from "react";
 
 export function useFormInput(initialValue: string) {
   const [value, setValue] = useState(initialValue);
-  const [messages, setMessages] = useState<string[]>([]);
+  const [errors, setErrors] = useState<string[]>([]);
 
-  function validate(callback: (value: string) => string[]) {
-    const result = callback(value);
-    setMessages(result);
-    return result;
+  function validate(validator: (value: string) => string[]) {
+    const validationErrors = validator(value);
+    setErrors(validationErrors);
+    return validationErrors;
+  }
+
+  function reset() {
+    setValue(initialValue);
+    setErrors([]);
   }
 
   return {
     value,
     setValue,
-    messages,
+    errors,
     validate,
-    clearMessages: () => setMessages([])
+    reset
   };
 }
