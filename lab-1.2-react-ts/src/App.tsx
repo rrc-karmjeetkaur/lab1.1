@@ -10,10 +10,18 @@ import { employeeRepo } from "./repositories/employeeRepo";
 import AddEmployeeForm from "./components/AddEmployeeForm";
 
 export default function App() {
+
   const [departments, setDepartments] = useState<Department[]>([]);
 
   useEffect(() => {
-    setDepartments(employeeRepo.getDepartments());
+
+    async function loadData() {
+      const data = await employeeRepo.getDepartments();
+      setDepartments(data);
+    }
+
+    loadData();
+
   }, []);
 
   return (
