@@ -1,5 +1,5 @@
 import { useFormInput } from "../hooks/useFormInput";
-import { employeeService } from "../services/employeeService";
+import { employeeRepo } from "../repositories/employeeRepo";
 import type { Department } from "../types/directory";
 
 interface Props {
@@ -11,24 +11,29 @@ export default function AddEmployeeForm({
   departments,
   onUpdate
 }: Props) {
- const firstName = useFormInput("");
-const department = useFormInput(departments[0]?.name || "");
 
-    useFormInput(departments[0]?.name || "");
+  const firstName = useFormInput("");
+  const department = useFormInput(departments[0]?.id?.toString() || "");
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
-    const result = employeeService.createEmployee(department.value, {
-      firstName: firstName.value
-    });
-
-    if (!result.success) {
-      firstName.validate(() => result.errors);
+    if (firstName.value.trim().length < 2) {
+      firstName.validate(() => ["First name must be at least 2 characters"]);
       return;
     }
 
-    onUpdate(result.data);
+    
+    await employeeRepo.createEmployee({
+      firstName: firstName.value,
+      lastName: "",
+      departmentId: Number(department.value)
+    });
+
+    
+    const updated = await employeeRepo.getDepartments();
+    onUpdate(updated);
+
     firstName.reset();
   }
 
@@ -62,7 +67,7 @@ const department = useFormInput(departments[0]?.name || "");
             onChange={(e) => department.setValue(e.target.value)}
           >
             {departments.map((d) => (
-              <option key={d.name} value={d.name}>
+              <option key={d.id} value={d.id?.toString() || ""}>
                 {d.name}
               </option>
             ))}

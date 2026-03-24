@@ -1,15 +1,20 @@
 import { Request, Response } from "express";
 import { employeeService } from "../services/employeeService";
 
-export const getEmployees = (req: Request, res: Response) => {
-  res.json(employeeService.getEmployees());
+export const getEmployees = async (req: Request, res: Response) => {
+  try {
+    const data = await employeeService.getEmployees();
+    res.json(data); // ✅ IMPORTANT
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch employees" });
+  }
 };
 
-export const createEmployee = (req: Request, res: Response) => {
+export const createEmployee = async (req: Request, res: Response) => {
   try {
-    const employee = employeeService.createEmployee(req.body);
-    res.json(employee);
+    const newEmployee = await employeeService.createEmployee(req.body);
+    res.json(newEmployee);
   } catch (error: any) {
-    res.status(400).json({ message: error.message });
+    res.status(400).json({ error: error.message });
   }
 };

@@ -10,28 +10,34 @@ import { employeeRepo } from "./repositories/employeeRepo";
 import AddEmployeeForm from "./components/AddEmployeeForm";
 
 export default function App() {
-
   const [departments, setDepartments] = useState<Department[]>([]);
 
+  // Load data from backend
   useEffect(() => {
-
     async function loadData() {
-      const data = await employeeRepo.getDepartments();
-      setDepartments(data);
+      try {
+        const data = await employeeRepo.getDepartments();
+        setDepartments(data);
+      } catch (error) {
+        console.error("Error loading departments:", error);
+      }
     }
 
     loadData();
-
   }, []);
 
   return (
     <div className="page">
       <Header />
 
-      <main>
-        {departments.map((dept) => (
-          <DepartmentCard key={dept.name} department={dept} />
-        ))}
+      <main className="main">
+        {departments.length === 0 ? (
+          <p>Loading data...</p>
+        ) : (
+          departments.map((dept) => (
+            <DepartmentCard key={dept.id} department={dept} />
+          ))
+        )}
 
         <AddEmployeeForm
           departments={departments}

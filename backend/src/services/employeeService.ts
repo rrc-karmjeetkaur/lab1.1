@@ -1,15 +1,17 @@
 import { employeeRepository } from "../repositories/employeeRepository";
 
 export const employeeService = {
-  getEmployees() {
-    return employeeRepository.getAll();
+
+  async getEmployees() {
+    return await employeeRepository.getAll();
   },
 
-  createEmployee(data: any) {
+  async createEmployee(data: any) {
     if (!data.firstName || data.firstName.length < 3) {
-      throw new Error("First name must be at least 3 characters.");
+      throw new Error("First name must be at least 3 characters");
     }
 
-    return employeeRepository.create(data);
+    return await employeeRepository.create(data);
   }
+
 };
