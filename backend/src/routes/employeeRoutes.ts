@@ -1,9 +1,17 @@
-import { Router } from "express";
-import { getEmployees, createEmployee } from "../controllers/employeeController";
+import express from "express";
+import { createEmployee, getEmployees } from "../controllers/employeeController";
+import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
 
-const router = Router();
+const router = express.Router();
 
+// Public route
 router.get("/", getEmployees);
-router.post("/", createEmployee);
+
+
+router.post(
+  "/",
+  ClerkExpressRequireAuth() as any,   
+  createEmployee
+);
 
 export default router;

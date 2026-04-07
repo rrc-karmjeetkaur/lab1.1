@@ -1,18 +1,19 @@
+import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/clerk-react";
+
 export function Header() {
   return (
-    <header className="site-header">
-      <div className="header-left">
-        <div className="text-logo" aria-label="Pixell River Financial logo">
-          PR
-        </div>
+    <header className="header">
+      <h1>Pixell River Employee Directory</h1>
 
-        <div>
-          <h1>Pixell River Employee Directory</h1>
-          <p className="greeting">
-            Welcome! This directory lists Pixell River staff roles grouped by department.
-          </p>
-        </div>
-      </div>
+      {/*  NOT LOGGED IN */}
+      <SignedOut>
+        <SignInButton />
+      </SignedOut>
+
+      {/*  LOGGED IN */}
+      <SignedIn>
+        <UserButton />
+      </SignedIn>
     </header>
   );
 }

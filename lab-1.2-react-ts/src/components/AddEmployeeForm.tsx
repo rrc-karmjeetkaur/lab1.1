@@ -1,6 +1,7 @@
 import { useFormInput } from "../hooks/useFormInput";
 import { employeeRepo } from "../repositories/employeeRepo";
 import type { Department } from "../types/directory";
+import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
 
 interface Props {
   departments: Department[];
@@ -23,14 +24,12 @@ export default function AddEmployeeForm({
       return;
     }
 
-    
     await employeeRepo.createEmployee({
       firstName: firstName.value,
       lastName: "",
       departmentId: Number(department.value)
     });
 
-    
     const updated = await employeeRepo.getDepartments();
     onUpdate(updated);
 
@@ -39,43 +38,54 @@ export default function AddEmployeeForm({
 
   return (
     <section className="form-section">
-      <h2>Add Staff Member</h2>
 
-      {firstName.errors.length > 0 && (
-        <div className="form-errors">
-          <ul>
-            {firstName.errors.map((err) => (
-              <li key={err}>{err}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+      {/*  NOT LOGGED IN */}
+      <SignedOut>
+        <p>Please login to add employee</p>
+        <SignInButton />
+      </SignedOut>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          First Name
-          <input
-            value={firstName.value}
-            onChange={(e) => firstName.setValue(e.target.value)}
-          />
-        </label>
+      {/*  LOGGED IN */}
+      <SignedIn>
+        <h2>Add Staff Member</h2>
 
-        <label>
-          Department
-          <select
-            value={department.value}
-            onChange={(e) => department.setValue(e.target.value)}
-          >
-            {departments.map((d) => (
-              <option key={d.id} value={d.id?.toString() || ""}>
-                {d.name}
-              </option>
-            ))}
-          </select>
-        </label>
+        {firstName.errors.length > 0 && (
+          <div className="form-errors">
+            <ul>
+              {firstName.errors.map((err) => (
+                <li key={err}>{err}</li>
+              ))}
+            </ul>
+          </div>
+        )}
 
-        <button type="submit">Add</button>
-      </form>
+        <form onSubmit={handleSubmit}>
+          <label>
+            First Name
+            <input
+              value={firstName.value}
+              onChange={(e) => firstName.setValue(e.target.value)}
+            />
+          </label>
+
+          <label>
+            Department
+            <select
+              value={department.value}
+              onChange={(e) => department.setValue(e.target.value)}
+            >
+              {departments.map((d) => (
+                <option key={d.id} value={d.id?.toString() || ""}>
+                  {d.name}
+                </option>
+              ))}
+            </select>
+          </label>
+
+          <button type="submit">Add</button>
+        </form>
+      </SignedIn>
+
     </section>
   );
 }
