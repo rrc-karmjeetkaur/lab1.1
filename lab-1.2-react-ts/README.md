@@ -71,3 +71,15 @@ export default defineConfig([
   },
 ])
 ```
+
+
+## Lab 5.2 Chnages 
+In this lab, I improved my application by changing how it loads and manages data from the backend.
+
+Before this, I was using useEffect and fetch to get data, which worked but required more manual work and was not very efficient. For this lab, I used TanStack Query to handle data fetching in a better way.
+
+TanStack Query makes it easier to load data, keep it updated, and manage loading states. It also automatically refreshes data when changes happen, like when I add a new employee.
+
+This change improves the user experience because the data updates instantly without needing to reload the page. It also makes the code cleaner and easier to understand.
+
+By doing this, I learned how modern React applications manage server data and how using external libraries can simplify complex tasks.

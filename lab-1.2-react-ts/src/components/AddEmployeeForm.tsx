@@ -5,7 +5,7 @@ import { SignedIn, SignedOut, SignInButton, useAuth } from "@clerk/clerk-react";
 
 interface Props {
   departments: Department[];
-  onUpdate: (updated: Department[]) => void;
+  onUpdate: () => void;
 }
 
 export default function AddEmployeeForm({
@@ -16,55 +16,52 @@ export default function AddEmployeeForm({
   const firstName = useFormInput("");
   const department = useFormInput(departments[0]?.id?.toString() || "");
 
-  const { getToken } = useAuth();   
+  const { getToken } = useAuth();
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
     if (firstName.value.trim().length < 2) {
-      firstName.validate(() => ["First name must be at least 2 characters"]);
+      alert("First name must be at least 2 characters");
       return;
     }
 
-    const token = await getToken();   
+    try {
+      const token = await getToken();
 
-    await employeeRepo.createEmployee(
-      {
-        firstName: firstName.value,
-        lastName: "",
-        departmentId: Number(department.value)
-      },
-      token
-    );
+      if (!token) {
+        alert("Please login again");
+        return;
+      }
 
-    const updated = await employeeRepo.getDepartments();
-    onUpdate(updated);
+      await employeeRepo.createEmployee(
+        {
+          firstName: firstName.value,
+          lastName: "",
+          departmentId: Number(department.value)
+        },
+        token
+      );
 
-    firstName.reset();
+      onUpdate();   // refresh data
+      firstName.reset();
+
+    } catch (err) {
+      console.error(err);
+      alert("Error adding employee");
+    }
   }
 
   return (
     <section className="form-section">
 
-      {/* ❌ NOT LOGGED IN */}
       <SignedOut>
         <p>Please login to add employee</p>
         <SignInButton />
       </SignedOut>
 
-      {/* ✅ LOGGED IN */}
       <SignedIn>
         <h2>Add Staff Member</h2>
-
-        {firstName.errors.length > 0 && (
-          <div className="form-errors">
-            <ul>
-              {firstName.errors.map((err) => (
-                <li key={err}>{err}</li>
-              ))}
-            </ul>
-          </div>
-        )}
 
         <form onSubmit={handleSubmit}>
           <label>
