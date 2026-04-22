@@ -1,7 +1,7 @@
 import { useFormInput } from "../hooks/useFormInput";
 import { employeeRepo } from "../repositories/employeeRepo";
 import type { Department } from "../types/directory";
-import { SignedIn, SignedOut, SignInButton } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignInButton, useAuth } from "@clerk/clerk-react";
 
 interface Props {
   departments: Department[];
@@ -16,6 +16,8 @@ export default function AddEmployeeForm({
   const firstName = useFormInput("");
   const department = useFormInput(departments[0]?.id?.toString() || "");
 
+  const { getToken } = useAuth();   
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
 
@@ -24,11 +26,16 @@ export default function AddEmployeeForm({
       return;
     }
 
-    await employeeRepo.createEmployee({
-      firstName: firstName.value,
-      lastName: "",
-      departmentId: Number(department.value)
-    });
+    const token = await getToken();   
+
+    await employeeRepo.createEmployee(
+      {
+        firstName: firstName.value,
+        lastName: "",
+        departmentId: Number(department.value)
+      },
+      token
+    );
 
     const updated = await employeeRepo.getDepartments();
     onUpdate(updated);
@@ -39,13 +46,13 @@ export default function AddEmployeeForm({
   return (
     <section className="form-section">
 
-      {/*  NOT LOGGED IN */}
+      {/* ❌ NOT LOGGED IN */}
       <SignedOut>
         <p>Please login to add employee</p>
         <SignInButton />
       </SignedOut>
 
-      {/*  LOGGED IN */}
+      {/* ✅ LOGGED IN */}
       <SignedIn>
         <h2>Add Staff Member</h2>
 

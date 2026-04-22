@@ -4,9 +4,7 @@ import { ClerkExpressRequireAuth } from "@clerk/clerk-sdk-node";
 
 const router = express.Router();
 
-// Public route
 router.get("/", getEmployees);
-
 
 router.post(
   "/",

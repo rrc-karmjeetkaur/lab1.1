@@ -5,12 +5,10 @@ export function Header() {
     <header className="header">
       <h1>Pixell River Employee Directory</h1>
 
-      {/*  NOT LOGGED IN */}
       <SignedOut>
         <SignInButton />
       </SignedOut>
 
-      {/*  LOGGED IN */}
       <SignedIn>
         <UserButton />
       </SignedIn>
